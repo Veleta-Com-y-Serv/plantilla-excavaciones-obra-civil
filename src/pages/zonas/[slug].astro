@@ -1,0 +1,137 @@
+---
+// Página de una zona con `texto` (src/lib/paginas.ts, sección `zonas`): /zonas/<slug>/ («Excavaciones en Caspe»).
+// Banda de hormigón más oscuro con migas, el título (`titulo_pagina` de la sección con {zona}) en Oswald, la entrada
+// (`texto_pagina`) y los botones; el texto propio de la zona junto a la foto (la de la zona o la de la sección);
+// los servicios en el índice (los que tienen ficha, enlazados); las obras cuyo `lugar` nombra la zona, en fotos;
+// la banda de tinta para pedir presupuesto y las otras zonas con página.
+import Base from '../../layouts/Base.astro';
+import Imagen from '../../components/ui/Imagen.astro';
+import Titular from '../../components/ui/Titular.astro';
+import { seccion, site, tel, whatsapp, largo } from '../../data/site';
+import { enlaceDe, introZona, resumen, tituloZona, trabajosEn, zonasConPagina } from '../../lib/paginas';
+import type { Zona } from '../../lib/paginas';
+import { jsonLdMigas, jsonLdZona, urlBase } from '../../lib/seo';
+import { enlace, rutaDeSeccion } from '../../lib/multipagina';
+
+export function getStaticPaths() {
+  return zonasConPagina().map((z) => ({ params: { slug: z.slug }, props: { z } }));
+}
+
+interface Props { z: Zona }
+const { z } = Astro.props;
+const base = urlBase(Astro.site);
+const titulo = tituloZona(z);
+const intro = introZona(z);
+const nombreSeccion = String(z.seccion.antetitulo || z.seccion.titulo || 'Zonas').trim();
+const migas = [
+  { nombre: 'Inicio', ruta: '/' },
+  { nombre: nombreSeccion, ruta: rutaDeSeccion(z.idSeccion) },
+  { nombre: z.nombre, ruta: z.url },
+];
+const c = site.contacto;
+const foto = z.imagen || String(z.seccion.imagen || '');
+const servicios = seccion('servicios');
+const listaServicios = servicios ? servicios.items.filter((it) => it?.titulo) : [];
+const obras = trabajosEn(z.nombre).slice(0, 4);
+const presupuesto = site.boton_cabecera?.url || enlace('/#contacto');
+const textoPresupuesto = site.boton_cabecera?.texto || 'Pedir presupuesto';
+const wa = whatsapp(c.whatsapp, `Hola, quiero presupuesto para una obra en ${z.nombre}`);
+const otras = zonasConPagina().filter((x) => x !== z);
+---
+
+<Base titulo={titulo} descripcion={resumen(z.texto[0] ?? intro)} imagen={foto} ld={[jsonLdMigas(base, migas), jsonLdZona(base, z)]}>
+  <section class="banda banda--colada">
+    <div class="contenedor">
+      <nav aria-label="Migas de pan" class="migas">
+        <ol>
+          {migas.map((m, i) => (
+            <li>{i < migas.length - 1 ? <a href={m.ruta}>{m.nombre}</a> : <span aria-current="page">{m.nombre}</span>}</li>
+          ))}
+        </ol>
+      </nav>
+      <div class="ficha-hero">
+        <div class="ficha-hero-texto">
+          <p class="antetitulo">{z.nombre}</p>
+          <h1 class="ficha-titulo" style={`--l:${largo(titulo)}`}>{titulo}</h1>
+          {intro && <p class="entrada mt-5">{intro}</p>}
+          <div class="botones">
+            <a class="btn" href={presupuesto}>{textoPresupuesto}</a>
+            {c.telefono && <a class="btn-sec" href={tel(c.telefono)}>Llamar al {c.telefono}</a>}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="banda banda--papel">
+    <div class:list={['contenedor texto-rejilla', { 'texto-rejilla--foto': foto }]}>
+      {foto && (
+        <div class="texto-foto foto foto--marco">
+          <Imagen src={foto} alt={titulo} ancho={1000} alto={750} respaldo="/placeholders/foto.svg" />
+        </div>
+      )}
+      <div class="zona-texto">
+        {z.texto.map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+  </section>
+
+  {listaServicios.length > 0 && (
+    <section class="banda banda--papel">
+      <div class="contenedor">
+        <Titular cabeza antetitulo={servicios?.antetitulo} titulo={`Qué hacemos en ${z.nombre}`} />
+        <ul class="indice">
+          {listaServicios.map((it) => (
+            <li>
+              <h3>{enlaceDe(it) ? <a href={enlaceDe(it)}>{it.titulo}</a> : it.titulo}</h3>
+              {it.texto ? <p class="indice-texto">{it.texto}</p> : <span />}
+              <span />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  {obras.length > 0 && (
+    <section class="banda banda--colada">
+      <div class="contenedor">
+        <Titular cabeza antetitulo="Obras hechas" titulo={`Obras en ${z.nombre}`} />
+        <ul class="ficha-galeria">
+          {obras.map((t) => (
+            <li class="obra">
+              {t.imagen && <div class="foto foto--color foto--marco"><Imagen src={t.imagen} alt={t.titulo} ancho={1200} alto={900} respaldo="/placeholders/foto.svg" /></div>}
+              <div class="obra-pie">
+                <h3>{t.titulo}</h3>
+                {t.texto && <p class="obra-texto">{t.texto}</p>}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <section class="banda banda--tinta oscuro">
+    <div class="contenedor">
+      <Titular antetitulo="Presupuesto por escrito" titulo={`¿Tienes una obra en ${z.nombre}?`} texto="Vamos a verla, miramos accesos y terreno y te damos el precio antes de mover una piedra." />
+      <div class="botones">
+        <a class="btn" href={presupuesto}>{textoPresupuesto}</a>
+        {wa && <a class="btn-sec" href={wa} target="_blank" rel="noopener">WhatsApp</a>}
+      </div>
+    </div>
+  </section>
+
+  {otras.length > 0 && (
+    <section class="banda banda--papel">
+      <div class="contenedor">
+        <Titular titulo="También trabajamos en" />
+        <ul class="pueblos">
+          {otras.map((o) => (
+            <li><a href={o.url}><span class="pueblo-nombre">{o.nombre}</span><span class="menuda">Ver la zona</span></a></li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+</Base>

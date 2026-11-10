@@ -1,0 +1,66 @@
+---
+// Parque de maquinaria (la firma de la plantilla): banda de hormigón más oscuro con cabeza partida y las máquinas en
+// fila, como en la campa: un raíl que sale del contenedor hasta el borde de la ventana y se desliza con el dedo o con el
+// teclado. Cada máquina: foto 4:3 en blanco y negro con marco de tinta, tipo en letra menuda, nombre en Oswald y sus
+// datos entre filetes (capacidad, para qué, precio por hora) en Archivo Narrow; con `detalle`, enlace a su página.
+// Debajo, la `nota` (condiciones) y un botón a contacto. Con 1-2 máquinas, rejilla normal en vez de raíl.
+// Campos: antetitulo, titulo, texto, nota, cta, maquinas[] {nombre, categoria, capacidad, uso, precio, imagen, detalle}.
+import { seccion } from '../../data/site';
+import { enlaceDe } from '../../lib/paginas';
+import { enlace } from '../../lib/multipagina';
+import Banda from '../ui/Banda.astro';
+import Titular from '../ui/Titular.astro';
+import Imagen from '../ui/Imagen.astro';
+interface Props { id: string; primera?: boolean }
+const { id, primera = false } = Astro.props;
+const s = seccion(id);
+const maquinas = s ? s.maquinas.filter((m) => m?.nombre) : [];
+const nota = String(s?.nota ?? '').trim();
+const boton = s?.cta?.url ? s.cta : { texto: 'Preguntar disponibilidad', url: enlace('/#contacto') };
+---
+
+{
+  s && (s.titulo || s.texto || maquinas.length > 0) && (
+    <Banda id={id} color="colada" contenedor={false}>
+      <div class="contenedor">
+        <Titular cabeza nivel={primera ? 1 : 2} antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} />
+      </div>
+      {maquinas.length > 0 && (
+        <ul
+          class:list={['rail', { 'rail--pocas contenedor': maquinas.length < 3 }]}
+          {...(maquinas.length >= 3 && { tabindex: 0, 'aria-label': s.titulo ? `${s.titulo}: desliza para ver todas` : 'Máquinas: desliza para ver todas' })}
+        >
+          {maquinas.map((m) => {
+            const url = enlaceDe(m);
+            const filas = [
+              ['Capacidad', m.capacidad],
+              ['Para', m.uso],
+              ['Precio', m.precio],
+            ].filter(([, v]) => v);
+            return (
+              <li class="maquina">
+                {m.imagen && (
+                  <div class="foto foto--marco">
+                    <Imagen src={m.imagen} alt={m.nombre} ancho={1200} alto={900} respaldo="/placeholders/foto.svg" />
+                  </div>
+                )}
+                {m.categoria && <p class="menuda maquina-cat">{m.categoria}</p>}
+                <h3>{url ? <a href={url}>{m.nombre}</a> : m.nombre}</h3>
+                {filas.length > 0 && (
+                  <dl class="datos">
+                    {filas.map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+                  </dl>
+                )}
+                {url && <a class="enlace" href={url} aria-label={`Ver ${m.nombre}`}>Ver la máquina</a>}
+              </li>
+            );
+          })}
+        </ul>
+      )}
+      <div class="contenedor rail-pie">
+        {nota ? <p class="menuda">{nota}</p> : <span />}
+        {boton?.url && <a class="btn-sec justify-self-start" href={boton.url}>{boton.texto}</a>}
+      </div>
+    </Banda>
+  )
+}

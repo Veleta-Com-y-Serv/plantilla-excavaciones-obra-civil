@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import { site, tel } from '../data/site';
+const telefono = site.contacto.telefono;
+---
+
+<Base titulo="Página no encontrada">
+  <section class="banda banda--colada">
+    <div class="contenedor grid min-h-[60svh] items-center gap-10 md:grid-cols-12">
+      <p class="error-cifra md:col-span-5" aria-hidden="true">404</p>
+      <div class="md:col-span-7">
+        <p class="antetitulo">Error 404</p>
+        <h1 class="titulo-seccion mt-3" style="--l:8">Esta página no existe</h1>
+        <p class="entrada mt-5">El enlace está mal o la página ya no existe.</p>
+        <div class="botones">
+          <a class="btn" href="/">Volver al inicio</a>
+          {telefono && <a class="btn-sec" href={tel(telefono)}>Llamar al {telefono}</a>}
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

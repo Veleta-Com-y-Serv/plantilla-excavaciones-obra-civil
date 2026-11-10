@@ -1,0 +1,40 @@
+---
+// Cifras: la primera cifra colada en una placa (papel claro, borde de tinta de 3 px y sombra dura) en Oswald enorme,
+// ajustada a su ancho, con una marca naranja y su texto; al lado, la cabeza y el resto de cifras en filas entre filetes,
+// en Archivo Narrow. Campos: antetitulo, titulo, items[] {titulo = la cifra, texto}. Sin cifras no se pinta.
+// Nunca inventes cifras: solo las que da el cliente.
+import { seccion } from '../../data/site';
+import Banda from '../ui/Banda.astro';
+import Titular from '../ui/Titular.astro';
+interface Props { id: string; primera?: boolean }
+const { id, primera = false } = Astro.props;
+const s = seccion(id);
+const items = s ? s.items.filter((i) => String(i?.titulo ?? '').trim()) : [];
+const [lider, ...resto] = items;
+const cifraLider = lider ? String(lider.titulo).trim() : '';
+---
+
+{
+  s && lider && (
+    <Banda id={id} color="papel">
+      <div class="cifras-rejilla">
+        <div class="cifras-placa placa">
+          <span class="cifra-gigante" style={`--n:${Math.max(3, cifraLider.length)}`}>{cifraLider}</span>
+          <span class="cifra-marca" aria-hidden="true"></span>
+          {lider.texto && <p class="cifra-gigante-texto">{lider.texto}</p>}
+        </div>
+        <Titular nivel={primera ? 1 : 2} antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} />
+        {resto.length > 0 && (
+          <ul class="cifras-filas">
+            {resto.map((it) => (
+              <li>
+                <span class="cifra">{it.titulo}</span>
+                {it.texto && <span>{it.texto}</span>}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </Banda>
+  )
+}

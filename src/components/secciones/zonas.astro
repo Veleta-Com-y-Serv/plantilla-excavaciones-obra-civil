@@ -1,0 +1,52 @@
+---
+// Zonas de trabajo: a la izquierda la foto de la comarca (`imagen`, 4:5, fija al bajar en escritorio) y a la derecha la
+// cabeza, el texto y los pueblos en filas entre filetes con el nombre en Oswald; el pueblo con `texto` enlaza a su
+// página propia (/zonas/<slug>/, «Excavaciones en Caspe»). Sin foto, los pueblos van a tres columnas.
+// Campos: antetitulo, titulo, texto, imagen, titulo_pagina, texto_pagina, items[] {titulo, texto}.
+import { seccion } from '../../data/site';
+import { enlaceDe } from '../../lib/paginas';
+import { altSeccion } from '../../lib/seo';
+import Banda from '../ui/Banda.astro';
+import Titular from '../ui/Titular.astro';
+import Imagen from '../ui/Imagen.astro';
+interface Props { id: string; primera?: boolean }
+const { id, primera = false } = Astro.props;
+const s = seccion(id);
+const pueblos = s ? s.items.filter((i) => i?.titulo) : [];
+---
+
+{
+  s && (s.titulo || s.texto || pueblos.length > 0) && (
+    <Banda id={id} color="papel">
+      <div class:list={['zonas-rejilla', { 'zonas-rejilla--foto': s.imagen }]}>
+        {s.imagen && (
+          <div class="zonas-foto foto foto--marco">
+            <Imagen src={s.imagen} alt={altSeccion(s)} ancho={1000} alto={1250} respaldo="/placeholders/foto.svg" />
+          </div>
+        )}
+        <div>
+          <Titular nivel={primera ? 1 : 2} antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} />
+          {pueblos.length > 0 && (
+            <ul class="pueblos">
+              {pueblos.map((p) => {
+                const url = enlaceDe(p);
+                return (
+                  <li>
+                    {url ? (
+                      <a href={url}>
+                        <span class="pueblo-nombre">{p.titulo}</span>
+                        <span class="menuda">Ver la zona</span>
+                      </a>
+                    ) : (
+                      <span class="pueblo"><span class="pueblo-nombre">{p.titulo}</span></span>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </div>
+      </div>
+    </Banda>
+  )
+}

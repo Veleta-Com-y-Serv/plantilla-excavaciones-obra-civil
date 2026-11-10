@@ -1,0 +1,30 @@
+---
+// Para quién trabajamos: la banda de tinta (color primario, grano tamizado). El título como frase grande en Oswald
+// mayúscula claro sobre la tinta, la entrada y, bajo una barra clara de 3 px, los tipos de cliente en columnas separadas
+// por filetes verticales (en móvil, filas). Campos: antetitulo, titulo, texto, items[] {titulo, texto}.
+import { seccion } from '../../data/site';
+import Banda from '../ui/Banda.astro';
+import Titular from '../ui/Titular.astro';
+interface Props { id: string; primera?: boolean }
+const { id, primera = false } = Astro.props;
+const s = seccion(id);
+const items = s ? s.items.filter((i) => i?.titulo) : [];
+---
+
+{
+  s && (s.titulo || items.length > 0) && (
+    <Banda id={id} color="tinta">
+      <Titular cabeza nivel={primera ? 1 : 2} antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} claseTitulo="quien-titulo" />
+      {items.length > 0 && (
+        <ul class="quienes" style={`--n:${Math.min(items.length, 4)}`}>
+          {items.map((it) => (
+            <li>
+              <h3>{it.titulo}</h3>
+              {it.texto && <p>{it.texto}</p>}
+            </li>
+          ))}
+        </ul>
+      )}
+    </Banda>
+  )
+}

@@ -1,0 +1,124 @@
+# Metadatos de la plantilla para el catálogo de NoExpertise.
+id: excavaciones-obra-civil
+nombre: Excavaciones y obra civil
+descripcion: "Web de hormigón y naranja de obra para excavaciones: maquinaria con conductor, obras hechas y zonas."
+sectores:
+  - { id: excavaciones, nombre: Excavaciones y movimiento de tierras }
+  - { id: obra-civil, nombre: Obra civil }
+  - { id: derribos, nombre: Derribos y demoliciones }
+  - { id: alquiler-maquinaria, nombre: Alquiler de maquinaria con conductor }
+  - { id: aridos, nombre: Transporte de áridos }
+secciones:
+  - { id: hero, nombre: Portada }
+  - { id: servicios, nombre: Servicios }
+  - { id: maquinaria, nombre: Maquinaria }
+  - { id: cifras, nombre: Cifras }
+  - { id: trabajos, nombre: Obras hechas }
+  - { id: para-quien, nombre: Para quién trabajamos }
+  - { id: zonas, nombre: Zonas de trabajo }
+  - { id: proceso, nombre: Cómo trabajamos }
+  - { id: preguntas, nombre: Preguntas frecuentes }
+  - { id: contacto, nombre: Contacto }
+estilo: formwork
+plan_minimo: gratis
+version: 1.0.0
+base: astrowind
+demo_url: https://demo-plantilla-excavaciones-obra-civil.noexpertise.com
+activa: true
+orden: 730
+
+# Páginas propias (docs/plantillas.md § Fichas por elemento y páginas por zona). Espejo en src/data/fichas.ts.
+# Cada servicio y cada máquina con `detalle` tiene su página (/servicios/<slug>/, /maquinaria/<slug>/);
+# cada zona con `texto`, la suya en /zonas/<slug>/ («Excavaciones en Caspe»).
+fichas:
+  - { lista: servicios, campo: items, ruta: servicios, nombre: Servicio, tipo: Service }
+  - { lista: maquinaria, campo: maquinas, ruta: maquinaria, nombre: Máquina, tipo: Service }
+zonas:
+  ruta: zonas
+
+# Varias páginas (docs/plantillas.md § Varias páginas): reparto recomendado al activar «Varias páginas».
+# Inicio se queda con la portada y lo que no esté en ninguna página (aquí, cifras y para quién trabajamos).
+paginas:
+  - { ruta: servicios, titulo: Servicios, secciones: "servicios; zonas" }
+  - { ruta: maquinaria, titulo: Maquinaria, secciones: "maquinaria" }
+  - { ruta: obras, titulo: Obras hechas, secciones: "trabajos" }
+  - { ruta: contacto, titulo: Contacto, secciones: "proceso; preguntas; contacto" }
+
+# Asistente de puesta en marcha (NoExpertise): un paso por pantalla. Rutas del site sin índices;
+# tipos: texto y lista (la IA propone), datos, fotos, eleccion (colores y logo) y repaso.
+asistente:
+  - id: negocio
+    titulo: "Tu empresa"
+    pregunta: "¿Cómo se llama tu empresa y qué trabajos hacéis con las máquinas?"
+    ayuda: "Por ejemplo: excavaciones, zanjas, derribos, caminos o alquiler de máquinas con conductor, y desde qué pueblo salís cada mañana."
+    tipo: texto
+    campos: [nombre, eslogan, seo.titulo, seo.descripcion, secciones.hero.antetitulo, secciones.hero.titulo, secciones.hero.texto]
+  - id: contacto
+    titulo: "Cómo te encuentran"
+    pregunta: "¿Dónde tenéis la nave y cómo os pueden llamar o escribir para pedir presupuesto?"
+    ayuda: "Solo lo que quieras que vean tus clientes. El teléfono sale grande arriba y en el móvil, con un botón para llamar."
+    tipo: datos
+    campos: [contacto.telefono, contacto.whatsapp, contacto.email, contacto.direccion, contacto.horario, redes.instagram, redes.facebook]
+  - id: servicios
+    titulo: "Qué hacéis"
+    pregunta: "¿Qué trabajos hacéis? Uno por línea, como se lo dirías a un cliente por teléfono."
+    ayuda: "Por ejemplo: desmontes y explanaciones, zanjas para agua y luz, derribos de casas viejas, caminos rurales, muros de escollera, transporte de zahorra."
+    tipo: texto
+    campos: [secciones.servicios.titulo, secciones.servicios.texto, secciones.servicios.items]
+  - id: maquinaria
+    titulo: "Tus máquinas"
+    pregunta: "¿Qué máquinas tenéis? Una por línea: qué máquina es, de cuántas toneladas y para qué trabajos va bien."
+    ayuda: "Por ejemplo: «Giratoria de cadenas de 22 t, para desmontes y escollera». El precio por hora solo si quieres enseñarlo. Las fotos las pones luego en Contenido."
+    tipo: lista
+    campos: [secciones.maquinaria.maquinas]
+  - id: alquiler
+    titulo: "Cómo alquiláis"
+    pregunta: "¿Cómo se alquilan las máquinas? Si van con conductor, si es por horas o por días y si hay un mínimo."
+    ayuda: "Por ejemplo: siempre con conductor de la casa, por horas con un mínimo de media jornada, gasóleo incluido."
+    tipo: texto
+    campos: [secciones.maquinaria.titulo, secciones.maquinaria.texto, secciones.maquinaria.nota]
+  - id: trabajos
+    titulo: "Obras hechas"
+    pregunta: "Cuéntame algunas obras que hayáis hecho: qué, en qué pueblo y en qué año. Una por línea."
+    ayuda: "Por ejemplo: «Red de saneamiento en la calle Mayor de Valderrobres, 2024». Las fotos de cada obra las pones luego en Contenido."
+    tipo: lista
+    campos: [secciones.trabajos.trabajos]
+  - id: para-quien
+    titulo: "Para quién trabajáis"
+    pregunta: "¿Quiénes os llaman: constructoras, ayuntamientos, agricultores, particulares…? ¿Qué os pide cada uno?"
+    ayuda: "Por ejemplo: a los ayuntamientos, saneamiento y caminos; a los agricultores, balsas y nivelación de fincas."
+    tipo: texto
+    campos: [secciones.para-quien.titulo, secciones.para-quien.texto, secciones.para-quien.items]
+  - id: zonas
+    titulo: "Dónde trabajáis"
+    pregunta: "¿En qué pueblos y comarcas trabajáis? ¿Hasta dónde llegáis sin cobrar desplazamiento?"
+    ayuda: "Pon los pueblos donde más trabajáis. Luego, en Contenido, cada pueblo con un texto tiene su propia página para salir en Google."
+    tipo: texto
+    campos: [secciones.zonas.titulo, secciones.zonas.texto, secciones.zonas.items]
+  - id: proceso
+    titulo: "Cómo trabajáis"
+    pregunta: "¿Qué pasa desde que alguien os llama hasta que la máquina está en la obra?"
+    ayuda: "Por ejemplo: vais a ver el terreno, dais el precio por escrito y llegáis el día pactado."
+    tipo: texto
+    campos: [secciones.proceso.titulo, secciones.proceso.texto, secciones.proceso.items]
+  - id: preguntas
+    titulo: "Preguntas frecuentes"
+    pregunta: "¿Qué os preguntan siempre antes de contratar? Escribe cada pregunta y lo que respondéis."
+    ayuda: "Por ejemplo: si alquiláis sin conductor, si cobráis por horas o por obra, qué hacéis con la tierra, con cuánta antelación hay que llamar."
+    tipo: lista
+    campos: [secciones.preguntas.preguntas]
+  - id: fotos
+    titulo: "Tus fotos"
+    pregunta: "Pon una foto de portada con tus máquinas trabajando y, si quieres, una de la comarca donde trabajáis."
+    ayuda: "Sube las tuyas o elige una del banco. En la web salen en blanco y negro, así que valen también fotos de móvil. Las de cada máquina y cada obra van en Contenido."
+    tipo: fotos
+    campos: [secciones.hero.imagen, secciones.zonas.imagen]
+  - id: aspecto
+    titulo: "Colores y logo"
+    pregunta: "Elige los colores de tu web y, si tienes, tu logo."
+    ayuda: "El color de acento es el del botón para pedir presupuesto: un naranja o un amarillo de obra se ven de lejos."
+    tipo: eleccion
+    campos: [colores.primario, colores.acento, logo]
+  - id: repaso
+    titulo: "Repaso"
+    tipo: repaso

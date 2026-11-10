@@ -1,0 +1,31 @@
+---
+// Cómo trabajamos, como una secuencia de vertido: cabeza partida y los pasos en una lista numerada de verdad (<ol>)
+// bajo una barra de tinta, cada uno con su número en Oswald, un nombre corto y una línea, separados por filetes
+// verticales (en móvil, filas). Campos: antetitulo, titulo, texto, items[] {titulo, texto}, cta (opcional).
+import { seccion } from '../../data/site';
+import Banda from '../ui/Banda.astro';
+import Titular from '../ui/Titular.astro';
+interface Props { id: string; primera?: boolean }
+const { id, primera = false } = Astro.props;
+const s = seccion(id);
+const pasos = s ? s.items.filter((i) => i?.titulo) : [];
+---
+
+{
+  s && (s.titulo || pasos.length > 0) && (
+    <Banda id={id} color="papel">
+      <Titular cabeza nivel={primera ? 1 : 2} antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} />
+      {pasos.length > 0 && (
+        <ol class="pasos" style={`--n:${Math.min(pasos.length, 5)}`}>
+          {pasos.map((p) => (
+            <li>
+              <h3>{p.titulo}</h3>
+              {p.texto && <p>{p.texto}</p>}
+            </li>
+          ))}
+        </ol>
+      )}
+      {s.cta?.url && <p class="mt-10"><a class="btn" href={s.cta.url}>{s.cta.texto}</a></p>}
+    </Banda>
+  )
+}

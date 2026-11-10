@@ -1,0 +1,57 @@
+---
+// Portada «Poster»: la foto (`imagen`) a sangre en blanco y negro duro ocupando la pantalla bajo la cabecera, y abajo a
+// la izquierda una placa de tinta (color primario) con antetítulo, titular en Oswald mayúscula ajustado a su palabra más
+// larga, una frase y los dos botones (naranja levantado + gris hundido); debajo, los `items` (solo `titulo`) como datos
+// cortos separados por filetes. `pie_foto`: etiqueta de lo que se ve en la foto. En móvil la foto va arriba y la placa
+// debajo. Sin `imagen`, la portada es solo la placa a todo el ancho. Sin `cta`, el primer botón llama.
+import { seccion, site, tel, externo, largo } from '../../data/site';
+import { altHero } from '../../lib/seo';
+import Imagen from '../ui/Imagen.astro';
+interface Props { id: string; primera?: boolean }
+const { id, primera = false } = Astro.props;
+const s = seccion(id);
+const c = site.contacto;
+const principal = s?.cta?.url ? s.cta : c.telefono ? { texto: `Llamar al ${c.telefono}`, url: tel(c.telefono) } : null;
+const secundario = s?.cta_secundario?.url ? s.cta_secundario : null;
+const datos = (s?.items ?? []).map((it) => String(it?.titulo ?? '').trim()).filter(Boolean);
+const titulo = s?.titulo || site.nombre;
+---
+
+{
+  s && (
+    <section id={id} class:list={['portada', { 'portada--con-foto': s.imagen }]}>
+      {s.imagen && (
+        <div class="portada-foto foto">
+          <Imagen src={s.imagen} alt={altHero()} ancho={1920} alto={1080} prioridad={primera} respaldo="/placeholders/foto.svg" />
+          {s.pie_foto && <p class="portada-pie menuda">{s.pie_foto}</p>}
+        </div>
+      )}
+      <div class="portada-contenido contenedor">
+        <div class="portada-placa oscuro">
+          {s.antetitulo && <p class="antetitulo">{s.antetitulo}</p>}
+          <h1 class="portada-titulo" style={`--l:${largo(titulo)}`}>{titulo}</h1>
+          {s.texto && <p class="portada-parrafo">{s.texto}</p>}
+          {(principal || secundario) && (
+            <div class="botones">
+              {principal && (
+                <a class="btn" href={principal.url} {...(externo(principal.url) && { rel: 'noopener', target: '_blank' })}>
+                  {principal.texto}
+                </a>
+              )}
+              {secundario && (
+                <a class="btn-sec" href={secundario.url} {...(externo(secundario.url) && { rel: 'noopener', target: '_blank' })}>
+                  {secundario.texto}
+                </a>
+              )}
+            </div>
+          )}
+          {datos.length > 0 && (
+            <ul class="portada-datos menuda">
+              {datos.map((d) => <li>{d}</li>)}
+            </ul>
+          )}
+        </div>
+      </div>
+    </section>
+  )
+}

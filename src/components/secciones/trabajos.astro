@@ -1,0 +1,47 @@
+---
+// Obras hechas: cabeza y las obras como fotos grandes en blanco y negro con marco de tinta. La primera, a todo el ancho
+// en 21:9 con el pie partido; las siguientes por parejas de 7 y 5 columnas (luego 5 y 7), a la misma altura. Bajo cada
+// foto: título en Oswald, tipo, lugar y año separados por filetes, y su línea. Una obra sin foto queda como ficha de
+// texto bajo una barra de tinta. Campos: antetitulo, titulo, texto, cta, trabajos[] {titulo, lugar, anio, categoria, texto, imagen}.
+import { seccion } from '../../data/site';
+import Banda from '../ui/Banda.astro';
+import Titular from '../ui/Titular.astro';
+import Imagen from '../ui/Imagen.astro';
+interface Props { id: string; primera?: boolean }
+const { id, primera = false } = Astro.props;
+const s = seccion(id);
+const obras = s ? s.trabajos.filter((t) => t?.titulo) : [];
+---
+
+{
+  s && (s.titulo || s.texto || obras.length > 0) && (
+    <Banda id={id} color="papel">
+      <Titular cabeza nivel={primera ? 1 : 2} antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} />
+      {obras.length > 0 && (
+        <ul class:list={['obras', `obras--${obras.length}`]}>
+          {obras.map((t, i) => (
+            <li class:list={['obra', { 'obra--sin-foto': !t.imagen }]}>
+              {t.imagen && (
+                <div class="foto foto--color foto--marco">
+                  <Imagen src={t.imagen} alt={t.titulo} ancho={i === 0 ? 1600 : 1200} alto={i === 0 ? 686 : 900} respaldo="/placeholders/foto.svg" />
+                </div>
+              )}
+              <div class="obra-pie">
+                <h3>{t.titulo}</h3>
+                {(t.categoria || t.lugar || t.anio) && (
+                  <p class="obra-meta menuda">
+                    {t.categoria && <span>{t.categoria}</span>}
+                    {t.lugar && <span>{t.lugar}</span>}
+                    {t.anio && <span class="cifra">{t.anio}</span>}
+                  </p>
+                )}
+                {t.texto && <p class="obra-texto">{t.texto}</p>}
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+      {s.cta?.url && <p class="mt-12"><a class="btn-sec" href={s.cta.url}>{s.cta.texto}</a></p>}
+    </Banda>
+  )
+}

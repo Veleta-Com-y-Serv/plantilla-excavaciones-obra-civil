@@ -1,0 +1,119 @@
+---
+// Pie «tajo»: banda de tinta (color primario) a todo el ancho con grano tamizado, el nombre muy grande en Oswald
+// (mástil, ajustado a su palabra más larga) y cuatro columnas: contacto, dónde estamos, servicios y esta web con redes.
+// Todo de site.yaml → contacto, redes, menu y la sección de servicios. «Web creada con NoExpertise» si marca_pie no es false.
+// En móvil, barra fija abajo con «Llamar» y «Presupuesto» (al botón de la cabecera, al contacto o al WhatsApp).
+import { site, tel, mapa, whatsapp, buscarSeccion, seccion, largo } from '../data/site';
+import { enlace, rutaDeSeccion } from '../lib/multipagina';
+import Icono from './ui/Icono.astro';
+interface Props { variante?: string }
+const { variante = 'tajo' } = Astro.props;
+const c = site.contacto;
+const redes = Object.entries(site.redes).filter(([, url]) => url);
+const anio = new Date().getFullYear();
+const servicios = buscarSeccion('servicios');
+const listaServicios = servicios ? servicios.s.items.map((i) => String(i?.titulo ?? '').trim()).filter(Boolean).slice(0, 7) : [];
+const presupuesto = site.boton_cabecera?.url
+  ? { url: site.boton_cabecera.url, fuera: false }
+  : seccion('contacto')
+    ? { url: enlace('/#contacto'), fuera: false }
+    : c.whatsapp
+      ? { url: whatsapp(c.whatsapp, `Hola, quiero pedir presupuesto a ${site.nombre}`), fuera: true }
+      : null;
+---
+
+<footer class={`pie pie--${variante} oscuro`}>
+  <div class="contenedor">
+    <div class="pie-gigante" style={`--l:${largo(site.nombre)}`}><p>{site.nombre}</p></div>
+    {site.eslogan && <p class="pie-eslogan">{site.eslogan}</p>}
+    <div class="pie-columnas">
+      {
+        (c.telefono || c.email || c.whatsapp) && (
+          <div>
+            <p class="pie-titulo">Contacto</p>
+            <ul class="pie-lista pie-dato">
+              {c.telefono && <li><a class="pie-tel" href={tel(c.telefono)}>{c.telefono}</a></li>}
+              {c.whatsapp && <li><a href={whatsapp(c.whatsapp)} rel="noopener" target="_blank">WhatsApp</a></li>}
+              {c.email && <li class="break-words"><a href={`mailto:${c.email}`}>{c.email}</a></li>}
+            </ul>
+          </div>
+        )
+      }
+      {
+        (c.direccion || c.horario) && (
+          <div>
+            <p class="pie-titulo">Dónde estamos</p>
+            {c.direccion && (
+              <p class="pie-dato">
+                <a href={mapa(c.direccion)} rel="noopener" target="_blank">{c.direccion}</a>
+              </p>
+            )}
+            {c.horario && <p class="pie-dato mt-3">{c.horario}</p>}
+          </div>
+        )
+      }
+      {
+        servicios && listaServicios.length > 0 && (
+          <div>
+            <p class="pie-titulo">{servicios.s.antetitulo || servicios.s.titulo || 'Servicios'}</p>
+            <ul class="pie-lista">
+              {listaServicios.map((t) => <li><a href={rutaDeSeccion(servicios.id)}>{t}</a></li>)}
+            </ul>
+          </div>
+        )
+      }
+      {
+        (site.menu.length > 0 || redes.length > 0) && (
+          <div>
+            {site.menu.length > 0 && (
+              <>
+                <p class="pie-titulo">En esta web</p>
+                <ul class="pie-lista">
+                  {site.menu.map((e) => <li><a href={e.url}>{e.texto}</a></li>)}
+                </ul>
+              </>
+            )}
+            {redes.length > 0 && (
+              <ul class="pie-redes">
+                {redes.map(([red, url]) => (
+                  <li>
+                    <a href={url} rel="noopener" target="_blank" aria-label={red}>
+                      <Icono nombre={red} tam={20} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )
+      }
+    </div>
+  </div>
+  <div class="contenedor pie-legal">
+    <span>© {anio} {site.nombre}</span>
+    <a href="/aviso-legal">Aviso legal y privacidad</a>
+    {
+      site.marca_pie && (
+        <span class="pie-noexpertise">
+          Web creada con <a href="https://noexpertise.com" rel="noopener">NoExpertise</a>
+        </span>
+      )
+    }
+  </div>
+  {
+    (c.telefono || presupuesto) && (
+      <nav class="barra-movil" aria-label="Llamar o pedir presupuesto">
+        {c.telefono && (
+          <a class="btn-sec" href={tel(c.telefono)}>
+            <Icono nombre="telefono" tam={18} /> Llamar
+          </a>
+        )}
+        {presupuesto && (
+          <a class="btn" href={presupuesto.url} {...(presupuesto.fuera && { rel: 'noopener', target: '_blank' })}>
+            Presupuesto
+          </a>
+        )}
+      </nav>
+    )
+  }
+</footer>

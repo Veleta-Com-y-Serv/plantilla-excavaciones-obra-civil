@@ -1,0 +1,10 @@
+---
+// Banda a todo el ancho de la ventana (fondo pleno de borde a borde, con el grano del hormigón) y el contenido en el
+// contenedor (90 rem, 16 px de margen en móvil). `color`: papel | colada (hormigón más oscuro) | tinta (banda del primario).
+interface Props { id?: string; color?: string; class?: string; etiqueta?: string; contenedor?: boolean }
+const { id, color = 'papel', class: clase = '', etiqueta, contenedor = true } = Astro.props;
+---
+
+<section id={id} class:list={['banda', `banda--${color}`, { oscuro: color === 'tinta' }, clase]} aria-label={etiqueta}>
+  {contenedor ? <div class="contenedor"><slot /></div> : <slot />}
+</section>

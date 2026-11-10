@@ -1,0 +1,51 @@
+---
+// Contacto en la banda de hormigón más oscuro: a la izquierda el titular, el teléfono enorme en Oswald (ajustado a su
+// ancho) y los datos en filas entre filetes; a la derecha el formulario (mailto) en una placa con sombra dura.
+// «Me interesa» sale de `opciones` (cadena separada por «;»); vacía = sin desplegable.
+// Campos: antetitulo, titulo, texto, opciones, cta (texto del botón de enviar).
+import { seccion, site, tel, mapa, whatsapp } from '../../data/site';
+import Banda from '../ui/Banda.astro';
+import Titular from '../ui/Titular.astro';
+import FormularioContacto from '../ui/FormularioContacto.astro';
+interface Props { id: string; primera?: boolean }
+const { id, primera = false } = Astro.props;
+const s = seccion(id);
+const c = site.contacto;
+const opciones = typeof s?.opciones === 'string' ? s.opciones.split(';').map((o) => o.trim()).filter(Boolean) : [];
+const datos = [
+  c.whatsapp && { etiqueta: 'WhatsApp', valor: c.whatsapp, url: whatsapp(c.whatsapp), fuera: true },
+  c.email && { etiqueta: 'Email', valor: c.email, url: `mailto:${c.email}`, fuera: false },
+  c.direccion && { etiqueta: 'Nave', valor: c.direccion, url: mapa(c.direccion), fuera: true },
+  c.horario && { etiqueta: 'Horario', valor: c.horario, url: '', fuera: false },
+].filter(Boolean) as { etiqueta: string; valor: string; url: string; fuera: boolean }[];
+---
+
+{
+  s && (
+    <Banda id={id} color="colada">
+      <div class="contacto-rejilla">
+        <div>
+          <Titular nivel={primera ? 1 : 2} antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} />
+          {c.telefono && (
+            <p class="contacto-tel" style={`--n:${Math.max(9, c.telefono.length)}`}>
+              <a href={tel(c.telefono)} aria-label={`Llamar al ${c.telefono}`}>{c.telefono}</a>
+            </p>
+          )}
+          {datos.length > 0 && (
+            <dl class="vias">
+              {datos.map((d) => (
+                <div>
+                  <dt>{d.etiqueta}</dt>
+                  <dd>{d.url ? <a href={d.url} {...(d.fuera && { rel: 'noopener', target: '_blank' })}>{d.valor}</a> : d.valor}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+        </div>
+        <div class="placa">
+          <FormularioContacto boton={s.cta?.texto || 'Pedir presupuesto'} opciones={opciones} />
+        </div>
+      </div>
+    </Banda>
+  )
+}

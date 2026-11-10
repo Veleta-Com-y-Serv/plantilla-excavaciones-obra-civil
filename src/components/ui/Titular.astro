@@ -1,0 +1,21 @@
+---
+// Titular de sección: antetítulo en letra menuda (caja normal) + título en Oswald mayúscula + entrada. Sin campos, no pinta nada.
+// El título se ajusta a su palabra más larga (`--l`, largo() de src/data/site.ts): nunca parte palabras.
+// `cabeza`: título a la izquierda y entrada a la derecha en escritorio. Adaptado de AstroWind (Headline.astro), © onWidget, MIT.
+import { largo } from '../../data/site';
+interface Props { titulo?: string; antetitulo?: string; texto?: string; class?: string; nivel?: 1 | 2; cabeza?: boolean; claseTitulo?: string }
+const { titulo, antetitulo, texto, class: clase = '', nivel = 2, cabeza = false, claseTitulo = '' } = Astro.props;
+const H = nivel === 1 ? 'h1' : 'h2';
+---
+
+{
+  (titulo || antetitulo || texto) && (
+    <div class:list={[cabeza ? 'cabeza' : 'titular', clase]}>
+      <div class="ajusta">
+        {antetitulo && <p class="antetitulo">{antetitulo}</p>}
+        {titulo && <H class:list={['titulo-seccion', claseTitulo]} style={`--l:${largo(titulo)}`}>{titulo}</H>}
+      </div>
+      {texto && <p class="entrada">{texto}</p>}
+    </div>
+  )
+}

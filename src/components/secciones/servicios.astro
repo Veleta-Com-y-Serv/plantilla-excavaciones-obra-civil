@@ -1,0 +1,36 @@
+---
+// Servicios como índice de obra: cabeza partida (título a la izquierda, entrada a la derecha) y una fila por servicio
+// entre filetes, bajo una barra de tinta de 3 px: el nombre en Oswald mayúscula, su línea y, si tiene página propia
+// (`detalle`), el enlace a ella. Campos: antetitulo, titulo, texto, items[] {titulo, texto, detalle, slug, imagenes}.
+// Sin servicios, solo la cabeza (y sin cabeza ni servicios no se pinta).
+import { seccion } from '../../data/site';
+import { enlaceDe } from '../../lib/paginas';
+import Banda from '../ui/Banda.astro';
+import Titular from '../ui/Titular.astro';
+interface Props { id: string; primera?: boolean }
+const { id, primera = false } = Astro.props;
+const s = seccion(id);
+const items = s ? s.items.filter((i) => i?.titulo) : [];
+---
+
+{
+  s && (s.titulo || s.texto || items.length > 0) && (
+    <Banda id={id} color="papel">
+      <Titular cabeza nivel={primera ? 1 : 2} antetitulo={s.antetitulo} titulo={s.titulo} texto={s.texto} />
+      {items.length > 0 && (
+        <ul class="indice">
+          {items.map((it) => {
+            const url = enlaceDe(it);
+            return (
+              <li>
+                <h3>{url ? <a href={url}>{it.titulo}</a> : it.titulo}</h3>
+                {it.texto ? <p class="indice-texto">{it.texto}</p> : <span />}
+                {url && <a class="enlace indice-ver" href={url} aria-label={`Más sobre ${it.titulo}`}>Cómo lo hacemos</a>}
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </Banda>
+  )
+}

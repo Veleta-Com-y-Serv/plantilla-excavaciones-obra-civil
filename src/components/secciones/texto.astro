@@ -1,0 +1,45 @@
+---
+// Apartado de texto genérico (apartados nuevos del cliente, `tipo: texto`): cabeza y párrafos; con imagen, la foto en
+// blanco y negro con marco de tinta a la izquierda y el texto a la derecha. Los `items` salen en filas entre filetes.
+// Campos: antetitulo, titulo, texto (párrafos separados por línea en blanco), imagen, items[] {titulo, texto}, cta.
+import { seccion, parrafos } from '../../data/site';
+import { altSeccion } from '../../lib/seo';
+import Banda from '../ui/Banda.astro';
+import Titular from '../ui/Titular.astro';
+import Imagen from '../ui/Imagen.astro';
+interface Props { id: string; primera?: boolean }
+const { id, primera = false } = Astro.props;
+const s = seccion(id);
+const items = s ? s.items.filter((i) => i?.titulo) : [];
+---
+
+{
+  s && (s.titulo || s.texto || items.length > 0) && (
+    <Banda id={id} color="papel">
+      <div class:list={['texto-rejilla', { 'texto-rejilla--foto': s.imagen }]}>
+        {s.imagen ? (
+          <div class="texto-foto foto foto--marco">
+            <Imagen src={s.imagen} alt={altSeccion(s)} ancho={1200} alto={900} respaldo="/placeholders/foto.svg" />
+          </div>
+        ) : (
+          <Titular nivel={primera ? 1 : 2} antetitulo={s.antetitulo} titulo={s.titulo} />
+        )}
+        <div>
+          {s.imagen && <Titular nivel={primera ? 1 : 2} antetitulo={s.antetitulo} titulo={s.titulo} />}
+          {s.texto && <div class:list={['parrafos', { 'mt-6': s.imagen }]}>{parrafos(s.texto).map((p) => <p>{p}</p>)}</div>}
+          {items.length > 0 && (
+            <ul class="lista-filas">
+              {items.map((it) => (
+                <li>
+                  <strong>{it.titulo}</strong>
+                  {it.texto && <span>{it.texto}</span>}
+                </li>
+              ))}
+            </ul>
+          )}
+          {s.cta?.url && <p class="mt-8"><a class="btn-sec" href={s.cta.url}>{s.cta.texto}</a></p>}
+        </div>
+      </div>
+    </Banda>
+  )
+}

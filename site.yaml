@@ -1,0 +1,255 @@
+# Contenido de la web. Es lo único que rellena la plataforma NoExpertise.
+# Las secciones se muestran en el orden de este fichero. Para ocultar una: activa: false.
+# Apartado nuevo: un id propio (es su ancla, /#id) con `tipo:` = el diseño de otra sección o `texto`.
+nombre: Excavaciones Monserrate
+eslogan: Movimiento de tierras, zanjas y derribos en el Bajo Aragón.
+sector: excavaciones
+logo: ""          # ruta a una imagen en public/ (p. ej. /logo.svg). Vacío = el nombre en letra de titulares.
+colores:
+  primario: "#1d1d20"   # bandas fuertes: cabecera, banda «para quién», pie
+  acento: "#f65311"     # naranja de obra: el botón principal, una cifra y el foco
+  fondo: "#adaaa5"      # papel de hormigón
+  texto: "#111114"      # tinta
+contacto:
+  telefono: "978 000 000"
+  email: obras@excavacionesmonserrate.es
+  direccion: "Partida Valmuel, nave 3, 44600 Alcañiz (Teruel)"
+  horario: "Lunes a viernes de 7:00 a 15:00. Sábados, solo con cita."
+  whatsapp: "+34 600 000 000"
+redes:
+  instagram: https://www.instagram.com/
+  facebook: https://www.facebook.com/
+  linkedin: ""
+menu:
+  - { texto: Servicios, url: "/#servicios" }
+  - { texto: Maquinaria, url: "/#maquinaria" }
+  - { texto: Obras, url: "/#trabajos" }
+  - { texto: Zonas, url: "/#zonas" }
+  - { texto: Contacto, url: "/#contacto" }
+boton_cabecera: { texto: Pedir presupuesto, url: "/#contacto" }
+seo:
+  titulo: Excavaciones Monserrate · Movimiento de tierras en Alcañiz
+  descripcion: "Excavaciones, zanjas, derribos, caminos y alquiler de maquinaria con conductor en Alcañiz y el Bajo Aragón. Presupuesto por escrito."
+  tipo: GeneralContractor   # tipo de schema.org
+marca_pie: true   # «Web creada con NoExpertise» en el pie
+
+secciones:
+  hero:
+    activa: true
+    antetitulo: Excavaciones y obra civil en Alcañiz
+    titulo: Movemos tierra en todo el Bajo Aragón
+    texto: Retros, giratorias, camiones y rodillos con conductor de la casa. Vamos a ver la obra y te damos precio por escrito.
+    imagen: /fotos/hero.jpg
+    pie_foto: Desmonte para una nave agrícola en Calanda
+    cta: { texto: Pedir presupuesto, url: "/#contacto" }
+    cta_secundario: { texto: Ver la maquinaria, url: "/#maquinaria" }
+    items:   # datos cortos bajo los botones (solo el título)
+      - { titulo: Máquinas con conductor }
+      - { titulo: Obra pública y privada }
+      - { titulo: Transporte de áridos }
+
+  servicios:
+    activa: true
+    antetitulo: Qué hacemos
+    titulo: Trabajos de excavación y obra civil
+    texto: "De una zanja para la acometida a la urbanización de un polígono. Con máquina propia y la misma cuadrilla de principio a fin."
+    items:
+      - titulo: Desmontes y explanaciones
+        texto: Dejamos el terreno a la cota que pide el proyecto, listo para cimentar o para cultivar.
+        detalle: |
+          Antes de levantar una nave, una casa o una balsa hay que dejar el terreno a su altura. Hacemos el desmonte donde sobra tierra y el terraplén donde falta, compactado por tongadas para que no se asiente con el tiempo.
+
+          Trabajamos con giratoria de cadenas, camión bañera y rodillo vibrante, y replanteamos con nivel láser para que la explanada quede a la cota que marca el proyecto. Si la tierra que sale sirve, la reutilizamos en la misma obra; si no, la llevamos a vertedero autorizado y te damos el justificante.
+
+          Vamos a ver la parcela, miramos accesos y tipo de terreno y te damos un precio por escrito. Si hace falta estudio geotécnico o proyecto, te decimos a quién llamar.
+      - titulo: Zanjas y canalizaciones
+        texto: "Saneamiento, agua, luz y telecomunicaciones: abrimos, colocamos tubo y tapamos."
+        detalle: |
+          Abrimos zanjas para redes de saneamiento, abastecimiento de agua, riego, electricidad y telecomunicaciones, tanto en calles de pueblo como en fincas y polígonos. Elegimos la máquina por el ancho de la zanja y el sitio que hay: miniexcavadora en calles estrechas y patios, retro mixta o giratoria en campo abierto.
+
+          Colocamos la cama de arena, el tubo y la cinta de señalización, rellenamos por capas y compactamos para que el firme no se hunda. En calle reponemos el pavimento o dejamos la zanja lista para el asfalto.
+
+          Trabajamos para ayuntamientos y para empresas instaladoras, y también hacemos acometidas sueltas para una casa o una nave. Señalizamos la obra y avisamos a los vecinos antes de cortar un paso.
+      - titulo: Derribos
+        texto: "Casas viejas, corrales, almacenes y naves. Separamos los residuos y dejamos el solar limpio."
+        detalle: |
+          Derribamos casas en ruina, corrales, almacenes y naves, con máquina y con medios manuales donde hay medianeras que respetar. Antes de empezar revisamos el edificio, pedimos lo que haga falta al ayuntamiento y protegemos las casas de al lado.
+
+          Separamos el escombro, la madera, la chatarra y el resto de residuos y los llevamos cada uno a su gestor autorizado, con los documentos que te pedirá el ayuntamiento para cerrar la licencia. Si hay fibrocemento, lo retira una empresa inscrita para ello antes de que entre la máquina.
+
+          Terminamos con el solar limpio y nivelado, listo para vender o para construir.
+      - titulo: Urbanizaciones
+        texto: "Viales, aceras, redes y explanadas para polígonos y nuevas calles."
+        detalle: |
+          Hacemos la parte de tierra y redes de una urbanización: desbroce, apertura de viales, zanjas para saneamiento, agua, luz y telecomunicaciones, sub-base de zahorra compactada y bordillos. Coordinamos con la dirección de obra y con el resto de oficios para que cada fase esté lista cuando llega la siguiente.
+
+          Trabajamos como subcontrata de constructoras y directamente para promotores y ayuntamientos. Llevamos el parte diario de máquinas y horas y lo entregamos con cada certificación.
+      - titulo: Caminos y pistas
+        texto: "Caminos rurales, accesos a fincas y pistas forestales con cuneta y firme de zahorra."
+      - titulo: Muros de escollera
+        texto: "Contención de taludes y márgenes de río con piedra de cantera colocada a máquina."
+      - titulo: Transporte de áridos
+        texto: "Zahorra, grava, arena y tierra vegetal servida en obra con nuestros camiones."
+
+  maquinaria:
+    activa: true
+    antetitulo: Parque de maquinaria
+    titulo: Máquinas con conductor de la casa
+    texto: "Todas nuestras, revisadas y con operario con años de oficio. Se alquilan por horas o por días."
+    nota: Precios por hora sin IVA, con conductor y gasóleo. Mínimo media jornada. Pregunta la disponibilidad por teléfono.
+    cta: { texto: Preguntar disponibilidad, url: "/#contacto" }
+    maquinas:
+      - nombre: Retroexcavadora mixta
+        categoria: Retroexcavadora
+        capacidad: "9 t, cazo de 60 cm y martillo"
+        uso: "Zanjas, acometidas y carga de camión"
+        precio: "desde 48 €/h"
+        imagen: /fotos/retro-mixta.jpg
+        detalle: |
+          La retroexcavadora mixta es la máquina para todo de una obra pequeña o mediana: excava con el brazo de atrás, carga con la pala de delante y se mueve por carretera sin necesidad de góndola. Por eso es la que más pedimos para zanjas, acometidas, pequeños vaciados y carga de camiones.
+
+          La llevamos con cazos de varios anchos, martillo para roca y hormigón y pinza para mover bloques o tubos. El conductor es de la casa y conoce bien la máquina, así que la zanja sale recta y a la profundidad que toca.
+
+          Se alquila por horas o por jornadas, siempre con conductor. Si no sabes qué máquina te hace falta, cuéntanos el trabajo y te lo decimos.
+      - nombre: Giratoria de cadenas
+        categoria: Giratoria
+        capacidad: "22 t, cazo de 1,2 m³"
+        uso: "Desmontes, sótanos y escollera"
+        precio: "desde 75 €/h"
+        imagen: /fotos/giratoria.jpg
+        detalle: |
+          La giratoria de cadenas es la máquina de los trabajos grandes: desmontes, vaciados de sótanos, apertura de caminos y colocación de escollera. Gira entera sobre sus cadenas, así que trabaja sin moverse y carga el camión desde el mismo sitio.
+
+          Tiene cazo de excavación, cazo de limpieza para taludes y pinza para colocar piedra de escollera. Con terreno duro le montamos el martillo. Llega a obra en góndola, y el transporte va incluido en el presupuesto.
+
+          Siempre va con conductor de la casa. Te ayudamos a calcular cuántos días hacen falta para que no pagues horas de más.
+      - nombre: Miniexcavadora
+        categoria: Miniexcavadora
+        capacidad: "3 t, 1,5 m de ancho"
+        uso: "Patios, jardines y accesos estrechos"
+        precio: "desde 40 €/h"
+        imagen: /fotos/miniexcavadora.jpg
+        detalle: |
+          La miniexcavadora entra donde no cabe otra máquina: por la puerta de un corral, en un patio interior, en una calle del casco antiguo o en un jardín ya hecho. Pesa poco, apenas marca el suelo y hace zanjas finas para tubos, cables y riego.
+
+          Va sobre cadenas de goma y la llevamos con cazos estrechos y anchos y con martillo pequeño. Es la máquina de las piscinas, las acometidas de una casa y las obras dentro de un pueblo.
+
+          Se alquila con conductor por horas o por jornadas. Si el acceso es muy justo, vamos antes a medirlo.
+      - nombre: Camión bañera
+        categoria: Camión
+        capacidad: "32 t de carga, 4 ejes"
+        uso: "Tierras, áridos y escombro"
+        precio: "desde 60 €/h"
+        imagen: /fotos/camion-banera.jpg
+      - nombre: Rodillo compactador
+        categoria: Rodillo
+        capacidad: "12 t, vibrante"
+        uso: "Explanadas, caminos y zahorras"
+        precio: "desde 55 €/h"
+        imagen: /fotos/rodillo.jpg
+
+  cifras:
+    activa: true
+    antetitulo: En números
+    titulo: Casi cuarenta años con la tierra
+    items:
+      - { titulo: "1987", texto: el año en que abrimos la primera zanja }
+      - { titulo: "14", texto: "máquinas propias, todas con conductor" }
+      - { titulo: "60 km", texto: alrededor de Alcañiz sin coste de desplazamiento }
+
+  trabajos:
+    activa: true
+    antetitulo: Obras hechas
+    titulo: Lo último que hemos movido
+    texto: Algunas obras de los últimos años en el Bajo Aragón y el Matarraña.
+    trabajos:
+      - titulo: Explanación para una nave agrícola
+        lugar: Calanda
+        anio: "2025"
+        categoria: Explanación
+        texto: Desmonte, terraplén compactado y accesos para una nave de almacén de fruta.
+        imagen: /fotos/obra-explanacion.jpg
+      - titulo: Red de saneamiento en la calle Mayor
+        lugar: Valderrobres
+        anio: "2024"
+        categoria: Canalizaciones
+        texto: "Zanja en calle estrecha con miniexcavadora, tubo nuevo y acometidas de cada casa."
+        imagen: /fotos/obra-zanja.jpg
+      - titulo: Muro de escollera junto al río
+        lugar: Alcañiz
+        anio: "2024"
+        categoria: Escollera
+        texto: Piedra de cantera colocada a máquina para proteger el talud de un camino.
+        imagen: /fotos/obra-escollera.jpg
+      - titulo: Camino rural de concentración parcelaria
+        lugar: Caspe
+        anio: "2023"
+        categoria: Caminos
+        texto: "Apertura de caja, cunetas y firme de zahorra compactada."
+        imagen: /fotos/obra-camino.jpg
+      - titulo: Derribo de un almacén viejo
+        lugar: Híjar
+        anio: "2025"
+        categoria: Derribos
+        texto: Derribo con máquina, residuos separados y solar limpio en dos semanas.
+        imagen: /fotos/obra-derribo.jpg
+
+  para-quien:
+    activa: true
+    antetitulo: Para quién trabajamos
+    titulo: Del ayuntamiento al vecino que hace una piscina
+    texto: Cada cliente pide una cosa distinta. La máquina y el cuidado son los mismos.
+    items:
+      - { titulo: Constructoras, texto: "Vaciados, zanjas y explanadas para que la obra empiece el día previsto." }
+      - { titulo: Ayuntamientos, texto: "Saneamiento, agua, caminos y urbanizaciones, por contrato menor o licitación." }
+      - { titulo: Agricultores, texto: "Balsas, nivelación de fincas, desbroces y caminos de acceso." }
+      - { titulo: Particulares, texto: "Piscinas, acometidas, solares y derribos pequeños, explicados sin jerga." }
+
+  zonas:
+    activa: true
+    antetitulo: Dónde trabajamos
+    titulo: El Bajo Aragón y sesenta kilómetros alrededor
+    texto: "Salimos cada mañana desde Alcañiz. Si tu pueblo no está en la lista, llámanos: seguramente también llegamos."
+    imagen: /fotos/comarca.jpg
+    titulo_pagina: "Excavaciones en {zona}"
+    texto_pagina: "Máquinas con conductor, zanjas, explanaciones y derribos en {zona}. Vamos a ver la obra y te damos precio por escrito."
+    items:
+      - titulo: Alcañiz
+        texto: "Es nuestra casa: aquí tenemos la nave y aquí hemos hecho buena parte de nuestras obras, desde acometidas en el casco antiguo hasta explanaciones en los polígonos. Conocemos las calles estrechas de la parte alta, donde solo entra la miniexcavadora, y los caminos de las huertas junto al Guadalope. Trabajamos para el ayuntamiento, para constructoras de la ciudad y para vecinos que hacen una piscina o tiran un corral. Si tienes una urgencia en Alcañiz, llegamos en el día."
+      - titulo: Caspe
+        texto: "En Caspe y su término hacemos sobre todo caminos rurales, balsas y nivelación de fincas de regadío, y también zanjas para redes nuevas en el pueblo. Muchos trabajos son de concentración parcelaria, con cunetas y firme de zahorra que tienen que aguantar el paso de tractores y camiones. Llevamos la giratoria, el camión y el rodillo juntos para que el tramo quede terminado sin esperas."
+      - titulo: Calanda
+        texto: "En Calanda trabajamos mucho con almacenes de fruta y explotaciones agrícolas: explanaciones para naves, accesos para camiones y balsas de riego. También hacemos derribos de casas viejas en el pueblo y acometidas para viviendas nuevas. Vamos a ver la parcela, miramos los accesos y te damos un precio por escrito antes de mover una piedra."
+      - titulo: Valderrobres
+        texto: "En Valderrobres y el resto del Matarraña las calles son estrechas y empinadas y las casas, de piedra. Ahí trabajamos con miniexcavadora y con mucho cuidado: redes de saneamiento, acometidas, muros y accesos a masías. Señalizamos la obra, avisamos a los vecinos y dejamos el pavimento como estaba."
+      - titulo: Andorra
+      - titulo: Híjar
+
+  proceso:
+    activa: true
+    antetitulo: Cómo trabajamos
+    titulo: De la llamada a la máquina en obra
+    texto: Cuatro pasos y un solo interlocutor. Sabes qué se hace, cuándo y cuánto cuesta.
+    items:
+      - { titulo: Llamas, texto: "Nos cuentas qué hay que hacer y dónde. Si tienes plano o fotos, mejor." }
+      - { titulo: Visita, texto: "Vamos a ver el terreno, los accesos y por dónde entra la máquina." }
+      - { titulo: Presupuesto, texto: "Te damos el precio por escrito, por horas o por obra cerrada." }
+      - { titulo: Obra, texto: "Llegamos el día pactado con la máquina y el conductor que hacen falta." }
+
+  preguntas:
+    activa: true
+    antetitulo: Preguntas frecuentes
+    titulo: Lo que nos preguntan antes de empezar
+    preguntas:
+      - { pregunta: "¿Alquiláis máquinas sin conductor?", respuesta: "No. Todas nuestras máquinas van con conductor de la casa. Así el trabajo sale bien a la primera y no te preocupas del seguro ni de las averías." }
+      - { pregunta: "¿Cobráis por horas o por obra?", respuesta: "Como prefieras. Las máquinas sueltas van por horas, con un mínimo de media jornada. Las obras completas, como una explanación o un derribo, van a precio cerrado por escrito." }
+      - { pregunta: "¿Os encargáis de los permisos?", respuesta: "Te decimos qué hace falta y te ayudamos a pedirlo. En derribos y obras en la calle preparamos la documentación de residuos y la señalización." }
+      - { pregunta: "¿Qué hacéis con la tierra y el escombro?", respuesta: "La tierra que sirve se reutiliza en la obra. Lo que sobra y el escombro van a vertedero o gestor autorizado, y te damos el justificante." }
+      - { pregunta: "¿Con cuánta antelación hay que llamar?", respuesta: "Para una máquina suelta, a menudo podemos ir en dos o tres días. Para obras más grandes, conviene llamar un par de semanas antes." }
+
+  contacto:
+    activa: true
+    antetitulo: Contacto
+    titulo: Pide presupuesto o disponibilidad
+    texto: "Cuéntanos dónde es y qué hay que hacer. Te llamamos en el día."
+    opciones: "Excavación o explanación; Zanja o acometida; Derribo; Máquina con conductor; Transporte de áridos; Otra consulta"   # «Me interesa» del formulario, separadas por «;» (vacío = sin desplegable)
